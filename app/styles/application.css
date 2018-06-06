@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+body {
+	font-family: 'Source Code Pro', monospace, sans-serif;
+	font-size: 20pt;
+}
+
+button {
+	font-family: inherit;
+	font-size: inherit;
+	display: block;
+	height: 50px;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 0;
+	margin-right: 0;
+
+	text-transform: uppercase;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: #036cb7;
+	color: white;
+}
+
+button:focus {
+	outline: none;
+}
+
+#app {
+	display: flex;
+	height: calc(100vh - 40px);
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#app > hr {
+	width: 1px;
+	height: 90%;
+	border: 0;
+	background: #ddd;
+}
+
+.pane {
+	flex-grow: 1;
+	flex-basis: 0;
+	max-width: 100%;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#editor {
+	display: block;
+	resize: none;
+	width: calc(100% - 30px);
+	height: calc(100vh - 140px);
+	padding: 10px;
+	padding-left: 20px;
+
+	text-transform: lowercase;
+	border: none;
+	background-color: #222;
+	border-radius: 5px;
+	font-size: inherit;
+	color: white;
+}
+
+#editor:focus {
+	outline: none;
+}
+
+
+#instructions {
+	height: calc(100vh - 120px);
+	overflow-y: auto;
+}
+
+.instruction {
+	margin-bottom: 5px;
+	padding: 10px;
+	padding-left: 20px;
+	width: calc(100% - 30px);
+
+	border-radius: 5px;
+	background-color: #ccc;
+}
+
+.highlight {
+	background-color: orange;
+}
+
+#stack-pane {
+	flex-grow: 2;
+}
+
+#stack {
+	display: flex;
+	flex-direction: column-reverse;
+	max-height: calc(100% - 10px);
+	margin-top: 10px;
+	overflow-y: auto;
+}
+
+.stack-item {
+	padding: 30px;
+	width: 100px;
+	margin: auto;
+	margin-bottom: -10px;
+
+	font-size: 30pt;
+	background-color: #fafafa;
+	box-shadow: 3px 3px #ddd;
+	text-align: center;
+}
+
+.stack-item-enter {
+  transform: scale(0);
+}
+
+.stack-item-enter-active {
+  transform: scale(1);
+  transition: transform 300ms ease-in;
+}
+
+.stack-item-exit {
+  transform: scale(1);
+}
+
+.stack-item-exit-active {
+  transform: scale(0);
+  transition: transform 300ms ease-in;
+}
