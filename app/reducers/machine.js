@@ -21,13 +21,13 @@ const parseLine = line => {
     case 'PUSH':
     case 'DUP':
     case 'BZERO':
-    case 'JUMP':
       parameters = parseIntParameter(instruction, parameters)
       break
     case 'HALT':
     case 'POP':
     case 'SWAP':
     case 'ADD':
+    case 'LESS':
       parameters = parseNoParameters(instruction, parameters)
       break
     default:
@@ -89,11 +89,16 @@ const run_instruction = (pc, instructions, stack) => {
     case 'ADD':
       var [x, stack] = pop_stack(stack)
       var [y, stack] = pop_stack(stack)
+      stack = push_stack(stack, y)
+      stack = push_stack(stack, x)
       stack = push_stack(stack, x + y)
       break
-    case 'JUMP':
-      var jump = parameters
-      pc += (jump - 1)
+    case 'LESS':
+      var [x, stack] = pop_stack(stack)
+      var [y, stack] = pop_stack(stack)
+      stack = push_stack(stack, y)
+      stack = push_stack(stack, x)
+      stack = push_stack(stack, x < y ? 1 : 0)
       break
     case 'BZERO':
       var jump = parameters
