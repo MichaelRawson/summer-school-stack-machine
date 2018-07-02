@@ -19,13 +19,12 @@ const parseLine = line => {
 
   switch(instruction) {
     case 'PUSH':
-    case 'DUP':
+    case 'CYCLE':
     case 'BZERO':
       parameters = parseIntParameter(instruction, parameters)
       break
     case 'HALT':
     case 'POP':
-    case 'SWAP':
     case 'ADD':
     case 'LESS':
       parameters = parseNoParameters(instruction, parameters)
@@ -56,6 +55,19 @@ const pop_stack = stack => {
   return [top, copy]
 }
 
+const cycle_stack = (stack, index) => {
+  var split = stack.length - index
+  if(index <= 0 || index > stack.length) {
+    throw "Stack index out of range"
+  }
+
+  return [
+    ...stack.slice(0, split),
+    ...stack.slice(split + 1),
+    stack[split]
+  ]
+}
+
 const run_instruction = (pc, instructions, stack) => {
   if(pc < 0 || pc >= instructions.length) {
     throw "Instruction fetch out of range"
@@ -72,19 +84,9 @@ const run_instruction = (pc, instructions, stack) => {
     case 'POP':
       stack = pop_stack(stack)[1]
       break
-    case 'SWAP':
-      var [x, stack] = pop_stack(stack)
-      var [y, stack] = pop_stack(stack)
-      stack = push_stack(stack, x)
-      stack = push_stack(stack, y)
-      break
-    case 'DUP':
+    case 'CYCLE':
       var index = parameters
-      if(index <= 0 || index > stack.length) {
-        throw "Stack index out of range"
-      }
-      var x = stack[stack.length - index]
-      stack = push_stack(stack, x)
+      stack = cycle_stack(stack, index)
       break
     case 'ADD':
       var [x, stack] = pop_stack(stack)
